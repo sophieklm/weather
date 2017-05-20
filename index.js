@@ -16,6 +16,7 @@ $( document ).ready(function() {
      longitude = position.coords.longitude;
      showWeather(latitude, longitude);
      showLocation(latitude, longitude);
+     getSummary(latitude, longitude);
    };
 
   function showWeather(latitude, longitude) {
@@ -27,6 +28,12 @@ $( document ).ready(function() {
   function showLocation(latitude, longitude) {
     $.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true', function(data){
        $('#current-location').text(data.results[0].address_components[3].long_name);
+    });
+  }
+
+  function getSummary(latitude, longitude) {
+    $.get('https://api.darksky.net/forecast/34d077993c8618ca4f719f9c268a76ce/' + latitude + ',' + longitude, function(data){
+       $('#current-summary').text(data.currently.summary);
     });
   }
 
